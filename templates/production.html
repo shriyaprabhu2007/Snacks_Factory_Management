@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Production Management - Snacks Factory</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <h1>Production Management</h1>
+
+        <p>Record manufacturing activities and track production variance.</p>
+
+        {% if message %}
+            <div class="message-box">
+                {{ message }}
+            </div>
+        {% endif %}
+
+        <!-- Production Form -->
+        <div class="production-form">
+
+            <h2>Record New Production</h2>
+
+            <form method="POST" action="/production">
+
+                <label>Select Product</label>
+
+                <select name="product_id" required>
+
+                    <option value="">Choose Product</option>
+
+                    {% for product in products %}
+
+                    <option value="{{ product.product_id }}">
+                        {{ product.product_name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+                <label>Planned Production Quantity</label>
+
+                <input
+                    type="number"
+                    name="planned_quantity"
+                    min="1"
+                    placeholder="Enter planned quantity"
+                    required
+                >
+
+                <label>Actual Production Quantity</label>
+
+                <input
+                    type="number"
+                    name="actual_quantity"
+                    min="1"
+                    placeholder="Enter actual quantity produced"
+                    required
+                >
+
+                <label>Wastage Quantity</label>
+
+                <input
+                    type="number"
+                    name="wastage_quantity"
+                    min="0"
+                    value="0"
+                    required
+                >
+
+                <label>Variance Notes</label>
+
+                <textarea
+                    name="variance_note"
+                    placeholder="Enter production remarks (optional)"
+                    rows="3"
+                ></textarea>
+
+                <button type="submit">
+                    Save Production
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- Production Records -->
+        <div class="production-table">
+
+            <h2>Production History</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Production ID</th>
+                        <th>Product Name</th>
+                        <th>Date</th>
+                        <th>Planned</th>
+                        <th>Actual</th>
+                        <th>Wastage</th>
+                        <th>Variance</th>
+                        <th>Notes</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for record in records %}
+
+                    <tr>
+
+                        <td>{{ record.production_id }}</td>
+
+                        <td>{{ record.product_name }}</td>
+
+                        <td>{{ record.production_date }}</td>
+
+                        <td>{{ record.planned_quantity if record.planned_quantity is not none else '-' }}</td>
+
+                        <td>{{ record.actual_quantity if record.actual_quantity is not none else record.quantity }}</td>
+
+                        <td>{{ record.wastage_quantity if record.wastage_quantity is not none else '-' }}</td>
+
+                        <td>
+                            {% if record.planned_quantity is not none %}
+                                {{ record.planned_quantity - record.actual_quantity }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td>{{ record.variance_note or '-' }}</td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="8">
+                            No production records available.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

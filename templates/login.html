@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Management Login - Snacks Factory</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff8ed, #ffe0b2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            width: 100%;
+            max-width: 430px;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(78, 52, 46, 0.15);
+            border-top: 7px solid #ff9800;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4e342e;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin: 10px 0 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            color: #5d4037;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            font-size: 14px;
+            background: #fffdf9;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff9800;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.12);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #e65100;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #bf360c;
+            transform: translateY(-2px);
+        }
+
+        .error {
+            color: #c62828;
+            background: #ffebee;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 18px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #e65100;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+
+        <div class="logo">🥨</div>
+
+        <h1>Snacks Factory</h1>
+
+        <p class="subtitle">Management System Login</p>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+
+            <div class="form-group">
+
+                <label for="username">Username</label>
+
+                <input type="text" name="username" placeholder="Enter username" style="display:block; width:100%; height:50px; border:2px solid red; background:white; padding:10px;">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="password">Password</label>
+
+                <input type="password" name="password" placeholder="Enter password" style="display:block; width:100%; height:50px; border:2px solid red; background:white; padding:10px;">
+
+            </div>
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <a href="/" class="back">← Back to Website</a>
+
+    </div>
+
+</body>
+</html>

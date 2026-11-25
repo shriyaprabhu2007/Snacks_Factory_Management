@@ -1,0 +1,16 @@
+<div class="sidebar">
+    <h2>Snacks Factory</h2>
+
+    <a href="/dashboard" class="{% if request.path == '/dashboard' %}active{% endif %}">Dashboard</a>
+    <a href="/customers" class="{% if request.path in ['/customers', '/edit_customer'] or request.path.startswith('/edit_customer/') %}active{% endif %}">Customers</a>
+    <a href="/products" class="{% if request.path == '/products' or request.path.startswith('/edit_product/') %}active{% endif %}">Products</a>
+    <a href="/sales" class="{% if request.path == '/sales' %}active{% endif %}">Sales Orders</a>
+    <a href="/billing" class="{% if request.path == '/billing' %}active{% endif %}">GST Billing</a>
+    <a href="/purchases" class="{% if request.path == '/purchases' %}active{% endif %}">Purchases</a>
+    <a href="/production" class="{% if request.path == '/production' %}active{% endif %}">Production</a>
+    <a href="/inventory" class="{% if request.path == '/inventory' %}active{% endif %}">Inventory</a>
+    <a href="/cost" class="{% if request.path == '/cost' %}active{% endif %}">Cost Calculation</a>
+    <a href="/reports" class="{% if request.path == '/reports' %}active{% endif %}">Reports</a>
+
+    <a href="/logout">Logout</a>
+</div>

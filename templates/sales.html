@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Orders - Snacks Factory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+
+        <h1>Sales Order Management</h1>
+        <p>Create and manage customer orders.</p>
+
+        <!-- Order Form -->
+        <div class="sales-form">
+
+            <h2>Create New Order</h2>
+
+            <form method="POST" action="/sales">
+
+                <label>Select Customer</label>
+                <select name="customer_id" required>
+                    <option value="">Choose Customer</option>
+
+                    {% for customer in customers %}
+                    <option value="{{ customer.customer_id }}">
+                        {{ customer.customer_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <label>Select Product</label>
+                <select name="product_id" required>
+                    <option value="">Choose Product</option>
+
+                    {% for product in products %}
+                    <option value="{{ product.product_id }}">
+                        {{ product.product_name }} - ₹{{ product.price }}
+                        (Stock: {{ product.quantity }})
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <label>Order Quantity</label>
+                <input type="number"
+                       name="quantity"
+                       min="1"
+                       placeholder="Enter quantity"
+                       required>
+
+                <button type="submit">Place Order</button>
+
+            </form>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="sales-table">
+
+            <h2>Sales Order Details</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Date</th>
+                        <th>Quantity</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.order_id }}</td>
+                        <td>{{ order.customer_name }}</td>
+                        <td>{{ order.product_name }}</td>
+                        <td>{{ order.order_date }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>₹{{ order.total_amount }}</td>
+                    </tr>
+
+                    {% else %}
+                    <tr>
+                        <td colspan="6">No sales orders available.</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

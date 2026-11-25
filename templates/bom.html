@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BOM Management | Snacks Factory</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+
+        <h1>Bill of Materials</h1>
+        <p>Manage recipes and raw material requirements</p>
+
+        {% if message %}
+            <div class="message-box">{{ message }}</div>
+        {% endif %}
+
+        <div class="card">
+
+            <h2>Create New Recipe</h2>
+
+            <form method="POST" action="/bom">
+
+                <label>Select Product</label>
+
+                <select name="product_id" required>
+                    <option value="">Choose Product</option>
+
+                    {% for product in products %}
+                    <option value="{{ product.product_id }}">
+                        {{ product.product_name }}
+                    </option>
+                    {% endfor %}
+
+                </select>
+
+                <label>Recipe Name</label>
+
+                <input
+                    type="text"
+                    name="recipe_name"
+                    placeholder="Example: Mixture Recipe"
+                    required
+                >
+
+                <h3>Required Raw Materials</h3>
+
+                {% for material in materials %}
+
+                    <label>
+                        {{ material.material_name }}
+                        ({{ material.unit }})
+                    </label>
+
+                    <input
+                        type="number"
+                        name="quantity_{{ material.material_id }}"
+                        step="0.01"
+                        min="0"
+                        placeholder="Enter required quantity"
+                    >
+
+                {% else %}
+
+                    <p>No raw materials available. Add materials in Inventory first.</p>
+
+                {% endfor %}
+
+                <button type="submit">Save Recipe</button>
+
+            </form>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Saved Recipes</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>BOM ID</th>
+                        <th>Recipe Name</th>
+                        <th>Product</th>
+                        <th>Required Materials</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for recipe in recipes %}
+
+                    <tr>
+                        <td>{{ recipe.bom_id }}</td>
+                        <td>{{ recipe.recipe_name }}</td>
+                        <td>{{ recipe.product_name }}</td>
+                        <td>{{ recipe.ingredients }}</td>
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="4">No recipes created yet.</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

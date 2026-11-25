@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sales Order Approval - Snacks Factory</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .approval-content {
+            background: rgba(255, 255, 255, 0.90);
+            padding: 28px;
+            margin-top: 30px;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(78, 52, 46, 0.12);
+            border: 1px solid #f0dfd0;
+        }
+
+        .approval-content h2 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+
+        .approval-content .description {
+            font-size: 14px;
+            color: #795548;
+            margin-bottom: 20px;
+        }
+
+        .approval-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .approval-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .approval-table th {
+            background: #5d4037;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .approval-table td {
+            padding: 16px 15px;
+            border-bottom: 1px solid #eee0d5;
+            color: #4e342e;
+        }
+
+        .approval-table tr:hover {
+            background: #fff8ed;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .pending {
+            background: #fff0d5;
+            color: #c77700;
+        }
+
+        .approved {
+            background: #e1f5e9;
+            color: #16834b;
+        }
+
+        .rejected {
+            background: #ffe3e3;
+            color: #d32f2f;
+        }
+
+        .action-form {
+            min-width: 190px;
+        }
+
+        .action-form textarea {
+            width: 100%;
+            min-height: 60px;
+            padding: 10px;
+            border: 1px solid #dfcfc2;
+            border-radius: 8px;
+            resize: vertical;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .action-form textarea:focus {
+            outline: none;
+            border-color: #ff9800;
+        }
+
+        .action-form button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 7px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .approve {
+            background: #198754;
+        }
+
+        .approve:hover {
+            background: #146c43;
+        }
+
+        .reject {
+            background: #dc3545;
+        }
+
+        .reject:hover {
+            background: #bb2d3b;
+        }
+
+        .approval-message {
+            padding: 12px 16px;
+            background: #e1f5e9;
+            color: #16834b;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: #e65100;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #bf360c;
+        }
+
+        @media (max-width: 700px) {
+            .approval-content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    {% include 'sidebar.html' %}
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <h1>Sales Order Approval</h1>
+
+        <p>Review, approve or reject customer sales orders.</p>
+
+        <div class="approval-content">
+
+            <h2>Sales Order Approval Management</h2>
+
+            <p class="description">
+                View all sales orders and manage their approval status.
+            </p>
+
+            {% if message %}
+                <div class="approval-message">
+                    {{ message }}
+                </div>
+            {% endif %}
+
+            <div class="approval-table-wrapper">
+
+                <table class="approval-table">
+
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Available Stock</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Approval</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for order in orders %}
+
+                        <tr>
+
+                            <td>{{ order.order_id }}</td>
+
+                            <td>{{ order.customer_name }}</td>
+
+                            <td>{{ order.product_name }}</td>
+
+                            <td>{{ order.quantity }}</td>
+
+                            <td>{{ order.available_stock }}</td>
+
+                            <td>₹{{ order.total_amount }}</td>
+
+                            <td>
+                                <span class="status {{ order.order_status|lower }}">
+                                    {{ order.order_status }}
+                                </span>
+                            </td>
+
+                            <td>
+
+                                {% if order.order_status == 'Pending' %}
+
+                                    <form method="POST" class="action-form">
+
+                                        <input type="hidden"
+                                               name="order_id"
+                                               value="{{ order.order_id }}">
+
+                                        <textarea
+                                            name="approval_note"
+                                            placeholder="Approval note"></textarea>
+
+                                        <button type="submit"
+                                                class="approve"
+                                                name="action"
+                                                value="approve">
+                                            Approve
+                                        </button>
+
+                                        <button type="submit"
+                                                class="reject"
+                                                name="action"
+                                                value="reject">
+                                            Reject
+                                        </button>
+
+                                    </form>
+
+                                {% else %}
+
+                                    <strong>
+                                        {{ order.approved_by_name or 'Processed' }}
+                                    </strong>
+
+                                    {% if order.approval_note %}
+                                        <br>
+                                        <small>{{ order.approval_note }}</small>
+                                    {% endif %}
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="8" style="text-align:center;">
+                                No sales orders found.
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <a href="{{ url_for('dashboard') }}" class="back-link">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</body>
+</html>

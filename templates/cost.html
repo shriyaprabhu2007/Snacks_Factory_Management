@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Production Cost - Snacks Factory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+
+        <h1>Production Cost Calculation</h1>
+        <p>Calculate the manufacturing cost of snack products.</p>
+
+        <!-- Cost Form -->
+        <div class="cost-form">
+
+            <h2>Enter Production Expenses</h2>
+
+            <form method="POST" action="/cost">
+
+                <label>Select Product</label>
+
+                <select name="product_id" required>
+                    <option value="">Choose Product</option>
+
+                    {% for product in products %}
+                    <option value="{{ product.product_id }}">
+                        {{ product.product_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <label>Material Cost (₹)</label>
+                <input type="number"
+                       name="material_cost"
+                       min="0"
+                       step="0.01"
+                       placeholder="Enter material cost"
+                       required>
+
+                <label>Labour Cost (₹)</label>
+                <input type="number"
+                       name="labour_cost"
+                       min="0"
+                       step="0.01"
+                       placeholder="Enter labour cost"
+                       required>
+
+                <label>Electricity Cost (₹)</label>
+                <input type="number"
+                       name="electricity_cost"
+                       min="0"
+                       step="0.01"
+                       placeholder="Enter electricity cost"
+                       required>
+
+                <label>Other Expenses (₹)</label>
+                <input type="number"
+                       name="other_cost"
+                       min="0"
+                       step="0.01"
+                       placeholder="Enter other expenses"
+                       required>
+
+                <label>Production Quantity (Packets)</label>
+                <input type="number"
+                       name="production_quantity"
+                       min="1"
+                       placeholder="Enter number of packets"
+                       required>
+
+                <button type="submit">Calculate Cost</button>
+
+            </form>
+
+        </div>
+
+        <!-- Cost Records -->
+        <div class="cost-table">
+
+            <h2>Production Cost Records</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Cost ID</th>
+                        <th>Product</th>
+                        <th>Material Cost</th>
+                        <th>Labour Cost</th>
+                        <th>Electricity</th>
+                        <th>Other Cost</th>
+                        <th>Total Cost</th>
+                        <th>Quantity</th>
+                        <th>Cost Per Packet</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for record in records %}
+                    <tr>
+                        <td>{{ record.cost_id }}</td>
+                        <td>{{ record.product_name }}</td>
+                        <td>₹{{ record.material_cost }}</td>
+                        <td>₹{{ record.labour_cost }}</td>
+                        <td>₹{{ record.electricity_cost }}</td>
+                        <td>₹{{ record.other_cost }}</td>
+                        <td>₹{{ record.total_cost }}</td>
+                        <td>{{ record.production_quantity }}</td>
+                        <td>₹{{ record.cost_per_packet }}</td>
+                    </tr>
+
+                    {% else %}
+                    <tr>
+                        <td colspan="9">No cost records available.</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

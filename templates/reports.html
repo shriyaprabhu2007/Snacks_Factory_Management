@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reports - Snacks Factory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% include 'sidebar.html' %}
+
+<div class="main">
+    <h1>Factory Reports</h1>
+    <p>View your factory's business and stock summary.</p>
+
+    <div class="container">
+
+        <div class="card">
+            <h3>Total Customers</h3>
+            <h2>{{ customers }}</h2>
+        </div>
+
+        <div class="card">
+            <h3>Total Products</h3>
+            <h2>{{ products }}</h2>
+        </div>
+
+        <div class="card">
+            <h3>Total Sales Orders</h3>
+            <h2>{{ orders }}</h2>
+        </div>
+
+        <div class="card">
+            <h3>Total Sales Amount</h3>
+            <h2>₹ {{ sales }}</h2>
+        </div>
+
+    </div>
+
+    <div class="card">
+        <h2>Finished Product Stock</h2>
+
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Available Quantity</th>
+            </tr>
+
+            {% for item in product_stock %}
+            <tr>
+                <td>{{ item.product_name }}</td>
+                <td>{{ item.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Raw Material Stock</h2>
+
+        <table>
+            <tr>
+                <th>Material Name</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+            </tr>
+
+            {% for item in material_stock %}
+            <tr>
+                <td>{{ item.material_name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.unit }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <button onclick="window.print()">Print Reports</button>
+
+</div>
+
+</body>
+</html>

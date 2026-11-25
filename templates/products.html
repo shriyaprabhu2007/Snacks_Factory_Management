@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Product Management - Snacks Factory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <h1>Product Management</h1>
+        <p>Add and manage your snacks factory products.</p>
+
+        <!-- Add Product Form -->
+        <div class="product-form">
+
+            <h2>Add New Product</h2>
+            {% if role in ['Admin', 'Manager'] %}
+            <form method="POST" action="/products">
+
+                <label>Product Name</label>
+                <input type="text"
+                       name="product_name"
+                       placeholder="Example: Mixture"
+                       required>
+
+                <label>Product Price (₹)</label>
+                <input type="number"
+                       name="price"
+                       placeholder="Enter product price"
+                       min="0.01"
+                       step="0.01"
+                       required>
+
+                <label>Available Quantity</label>
+                <input type="number"
+                       name="quantity"
+                       placeholder="Enter stock quantity"
+                       min="0"
+                       required>
+
+                <label>GST Rate (%)</label>
+                <input type="number"
+                       name="gst_rate"
+                       placeholder="Enter GST rate"
+                       min="0"
+                       step="0.01"
+                       required>
+
+                <button type="submit">Add Product</button>
+
+            </form>
+            {% endif %}
+
+        </div>
+
+        <!-- Product Table -->
+        <div class="product-table">
+
+            <h2>Available Products</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Price (₹)</th>
+                        <th>Available Quantity</th>
+                        <th>GST (%)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for product in products %}
+
+                    <tr>
+                        <td>{{ product.product_id }}</td>
+
+                        <td>{{ product.product_name }}</td>
+
+                        <td>₹{{ product.price }}</td>
+
+                        <td>{{ product.quantity }}</td>
+
+                        <td>{{ product.gst_rate }}%</td>
+
+                        <td>
+
+                            <!-- Edit Button -->
+                            <a href="/edit_product/{{ product.product_id }}"
+                               class="edit-btn">
+                                Edit
+                            </a>
+
+                            <!-- Delete Button -->
+                            <form method="POST"
+                                  action="/delete_product/{{ product.product_id }}"
+                                  style="display:inline;"
+                                  onsubmit="return confirm('Are you sure you want to delete this product?');">
+
+                                <button type="submit"
+                                        class="delete-btn">
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </td>
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="6">
+                            No products added yet.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

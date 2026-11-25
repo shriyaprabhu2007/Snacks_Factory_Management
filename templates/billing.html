@@ -1,0 +1,242 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GST Invoice - Snacks Factory</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+{% include 'sidebar.html' %}
+
+
+<div class="main">
+
+    <h1>GST Billing</h1>
+
+    <p>GST invoice and tax calculation</p>
+
+
+    {% for order in orders %}
+
+    <div class="invoice-card">
+
+        <!-- INVOICE HEADING -->
+
+        <div class="invoice-heading">
+
+            <div>
+
+                <h2>SNACKS FACTORY</h2>
+
+                <p>Snacks Manufacturing Company</p>
+
+                <p>Address: Your Factory Address</p>
+
+                <p>GSTIN: Add Your GSTIN</p>
+
+            </div>
+
+
+            <div class="invoice-title">
+
+                <h2>TAX INVOICE</h2>
+
+                <p>Invoice No: INV-{{ order.order_id }}</p>
+
+                <p>Date: {{ order.order_date }}</p>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <!-- CUSTOMER DETAILS -->
+
+        <h3>Customer Details</h3>
+
+        <p>
+            <b>Name:</b>
+            {{ order.customer_name }}
+        </p>
+
+        <p>
+            <b>Phone:</b>
+            {{ order.phone or 'Not provided' }}
+        </p>
+
+        <p>
+            <b>Address:</b>
+            {{ order.address or 'Not provided' }}
+        </p>
+
+
+        <br>
+
+
+        <!-- PRODUCT DETAILS -->
+
+        <table>
+
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+                <th>GST %</th>
+                <th>GST Amount</th>
+            </tr>
+
+
+            <tr>
+
+                <td>{{ order.product_name }}</td>
+
+                <td>{{ order.quantity }}</td>
+
+                <td>
+                    ₹ {{ "%.2f"|format(order.price) }}
+                </td>
+
+                <td>
+                    ₹ {{ "%.2f"|format(order.subtotal) }}
+                </td>
+
+                <td>
+                    {{ "%.2f"|format(order.gst_rate) }}%
+                </td>
+
+                <td>
+                    ₹ {{ "%.2f"|format(order.gst_amount) }}
+                </td>
+
+            </tr>
+
+        </table>
+
+
+        <br>
+
+
+        <!-- GST CALCULATION -->
+
+        <div class="gst-details">
+
+            <p>
+                Subtotal:
+                ₹ {{ "%.2f"|format(order.subtotal) }}
+            </p>
+
+            <p>
+                CGST:
+                ₹ {{ "%.2f"|format(order.cgst) }}
+            </p>
+
+            <p>
+                SGST:
+                ₹ {{ "%.2f"|format(order.sgst) }}
+            </p>
+
+            <p>
+                IGST:
+                ₹ {{ "%.2f"|format(order.igst) }}
+            </p>
+
+            <hr>
+
+            <h2>
+                Grand Total:
+                ₹ {{ "%.2f"|format(order.grand_total) }}
+            </h2>
+
+        </div>
+
+
+        <!-- INVOICE FOOTER -->
+
+        <div class="invoice-footer">
+
+            <p>Thank you for your business!</p>
+
+            <p>Computer generated invoice</p>
+
+        </div>
+
+
+        <!-- INVOICE STATUS -->
+
+        <p>
+            <b>Order Status:</b>
+
+            {% if order.order_status == 'Approved' %}
+                <span style="color: green;">Approved</span>
+
+            {% elif order.order_status == 'Rejected' %}
+                <span style="color: red;">Rejected</span>
+
+            {% else %}
+                <span style="color: orange;">Pending Approval</span>
+            {% endif %}
+
+        </p>
+
+
+        <!-- ACTION BUTTONS -->
+
+        {% if order.order_status == 'Approved' %}
+
+            <a
+                href="{{ url_for('generate_invoice', order_id=order.order_id) }}"
+                class="btn btn-primary"
+                style="display: inline-block; padding: 10px 18px; margin: 10px 5px; text-decoration: none;"
+            >
+                Download PDF
+            </a>
+
+            <button onclick="window.print()">
+                Print Invoice
+            </button>
+
+        {% else %}
+
+            <p style="color: #b26a00; margin-top: 15px;">
+                Invoice download is available after order approval.
+            </p>
+
+        {% endif %}
+
+
+    </div>
+
+
+    {% else %}
+
+    <div class="card">
+
+        <h3>No invoices available</h3>
+
+        <p>Create a sales order to generate an invoice.</p>
+
+    </div>
+
+    {% endfor %}
+
+
+</div>
+
+</body>
+</html>
+```

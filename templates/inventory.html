@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inventory Management - Snacks Factory</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <h1>Inventory Management</h1>
+
+        <p>Manage raw materials, finished products and stock movements.</p>
+
+        {% if message %}
+        <div class="message-box">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        <!-- Add Raw Material -->
+        <div class="inventory-form">
+
+            <h2>Add Raw Material</h2>
+            {% if role in ['Admin', 'Manager'] %}
+            <form method="POST" action="/inventory">
+
+                <label>Material Name</label>
+
+                <input type="text"
+                       name="material_name"
+                       placeholder="Example: Rice Flour"
+                       required>
+
+                <label>Quantity</label>
+
+                <input type="number"
+                       name="quantity"
+                       step="0.01"
+                       min="0.01"
+                       placeholder="Enter quantity"
+                       required>
+
+                <label>Unit</label>
+
+                <select name="unit" required>
+
+                    <option value="">Select Unit</option>
+                    <option value="Kg">Kg</option>
+                    <option value="Gram">Gram</option>
+                    <option value="Litre">Litre</option>
+                    <option value="Packet">Packet</option>
+
+                </select>
+
+                <button type="submit">Add Material</button>
+
+            </form>
+            {% endif %}
+
+        </div>
+
+        <!-- Raw Material Stock -->
+        <div class="inventory-table">
+
+            <h2>Raw Material Stock</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Material ID</th>
+                        <th>Material Name</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for material in materials %}
+
+                    <tr>
+                        <td>{{ material.material_id }}</td>
+                        <td>{{ material.material_name }}</td>
+                        <td>{{ material.quantity }}</td>
+                        <td>{{ material.unit }}</td>
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="4">No raw materials available.</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- Finished Product Stock -->
+        <div class="inventory-table">
+
+            <h2>Finished Product Stock</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Available Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for product in products %}
+
+                    <tr>
+                        <td>{{ product.product_id }}</td>
+                        <td>{{ product.product_name }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>₹{{ product.price }}</td>
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="4">No finished products available.</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- Stock Movement Ledger -->
+        <div class="inventory-table">
+
+            <h2>Stock Movement Ledger</h2>
+
+            <p>History of stock additions and other inventory movements.</p>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Movement ID</th>
+                        <th>Date</th>
+                        <th>Item Name</th>
+                        <th>Item Type</th>
+                        <th>Movement Type</th>
+                        <th>Quantity</th>
+                        <th>Reference</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for movement in movements %}
+
+                    <tr>
+
+                        <td>{{ movement.movement_id }}</td>
+
+                        <td>{{ movement.movement_date }}</td>
+
+                        <td>
+                            {% if movement.material_name %}
+                                {{ movement.material_name }}
+                            {% elif movement.product_name %}
+                                {{ movement.product_name }}
+                            {% else %}
+                                Unknown Item
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if movement.material_id %}
+                                Raw Material
+                            {% else %}
+                                Finished Product
+                            {% endif %}
+                        </td>
+
+                        <td>{{ movement.movement_type }}</td>
+
+                        <td>{{ movement.quantity }}</td>
+
+                        <td>{{ movement.reference_note or '-' }}</td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="7">
+                            No stock movements recorded yet.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

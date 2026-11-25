@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Customer - Snacks Factory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fff8ed;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: #4e342e;
+            color: white;
+            padding: 30px 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar h2 {
+            color: #ffab40;
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 18px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #6d4c41;
+            color: #ffab40;
+        }
+
+        /* Main content */
+        .main {
+            flex: 1;
+            padding: 40px;
+            min-width: 0;
+        }
+
+        .page-heading {
+            color: #4e342e;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        /* Form card */
+        .form-card {
+            background: white;
+            max-width: 850px;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            border-bottom: 5px solid #ff9800;
+        }
+
+        .form-card h3 {
+            color: #5d4037;
+            margin-bottom: 10px;
+            font-size: 21px;
+        }
+
+        .form-description {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #5d4037;
+            margin-bottom: 9px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            background: #fffdf9;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #ff9800;
+            box-shadow: 0 0 5px rgba(255,152,0,0.2);
+        }
+
+        .form-group textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 13px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .update-btn {
+            background: #e65100;
+            color: white;
+        }
+
+        .update-btn:hover {
+            background: #bf360c;
+        }
+
+        .cancel-btn {
+            background: #eee;
+            color: #4e342e;
+        }
+
+        .cancel-btn:hover {
+            background: #ddd;
+        }
+
+        @media (max-width: 750px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+            }
+
+            .main {
+                padding: 22px;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <h1 class="page-heading">Edit Customer</h1>
+        <p class="subtitle">Update your customer information</p>
+
+        <div class="form-card">
+
+            <h3>Customer Details</h3>
+            <p class="form-description">
+                Make the necessary changes and save the updated details.
+            </p>
+
+            <form method="POST">
+
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input
+                        type="text"
+                        name="customer_name"
+                        value="{{ customer.customer_name }}"
+                        placeholder="Enter customer name"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input
+                        type="tel"
+                        name="phone"
+                        value="{{ customer.phone }}"
+                        placeholder="Enter phone number">
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea
+                        name="address"
+                        placeholder="Enter customer address">{{ customer.address }}</textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn update-btn">
+                        Update Customer
+                    </button>
+
+                    <a href="/customers" class="btn cancel-btn">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

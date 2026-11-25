@@ -1,0 +1,581 @@
+
+/* =====================================
+   SNACKS FACTORY MANAGEMENT SYSTEM
+   Professional Theme
+===================================== */
+
+/* GLOBAL SETTINGS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+
+body {
+    background: #fff8ed;
+    color: #3e2723;
+    font-size: 14px;
+}
+
+/* =====================================
+   SIDEBAR
+===================================== */
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #4e342e;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 30px 20px;
+    color: white;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.sidebar h2 {
+    color: #ffb74d;
+    text-align: center;
+    margin-bottom: 35px;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.sidebar a {
+    display: block;
+    color: #fff3e0;
+    text-decoration: none;
+    padding: 14px 15px;
+    margin: 7px 0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: #ff9800;
+    color: #3e2723;
+    transform: translateX(5px);
+}
+
+/* =====================================
+   MAIN CONTENT AND SNACK BACKGROUND
+===================================== */
+
+.main {
+    position: relative;
+    margin-left: 250px;
+    padding: 35px;
+    min-height: 100vh;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 248, 237, 0.25),
+            rgba(255, 248, 237, 0.25)
+        ),
+        url("/static/images/snacks_food_banner.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.main h1 {
+    font-size: 30px;
+    color: #5d4037;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.main p {
+    color: #795548;
+    margin-bottom: 25px;
+}
+
+/* =====================================
+   DASHBOARD CARDS
+===================================== */
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.card {
+    display: block;
+    background: rgba(255, 255, 255, 0.86);
+    padding: 28px 22px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: #4e342e;
+    border-bottom: 5px solid #ff9800;
+    box-shadow: 0 5px 18px rgba(78, 52, 46, 0.12);
+    transition: 0.3s;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(78, 52, 46, 0.18);
+}
+
+.card h2 {
+    color: #e65100;
+    font-size: 21px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.card p {
+    color: #795548;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* =====================================
+   COMMON FORMS AND TABLES
+===================================== */
+
+.customer-form,
+.customer-table,
+.product-form,
+.product-table,
+.sales-form,
+.sales-table,
+.billing-table,
+.production-form,
+.production-table,
+.inventory-form,
+.inventory-table,
+.cost-form,
+.cost-table {
+    background: rgba(255, 255, 255, 0.90);
+    padding: 25px;
+    margin-top: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgba(78, 52, 46, 0.10);
+}
+
+.customer-form h2,
+.customer-table h2,
+.product-form h2,
+.product-table h2,
+.sales-form h2,
+.sales-table h2,
+.billing-table h2,
+.production-form h2,
+.production-table h2,
+.inventory-form h2,
+.inventory-table h2,
+.cost-form h2,
+.cost-table h2 {
+    color: #e65100;
+    margin-bottom: 20px;
+}
+
+/* FORM LABELS */
+
+.customer-form label,
+.product-form label,
+.sales-form label,
+.production-form label,
+.inventory-form label,
+.cost-form label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: bold;
+    color: #5d4037;
+}
+
+/* FORM INPUTS */
+
+.customer-form input,
+.customer-form textarea,
+.product-form input,
+.sales-form input,
+.sales-form select,
+.production-form input,
+.production-form select,
+.inventory-form input,
+.inventory-form select,
+.cost-form input,
+.cost-form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d7ccc8;
+    border-radius: 7px;
+    font-size: 15px;
+    background: white;
+}
+
+.customer-form textarea {
+    height: 90px;
+    resize: vertical;
+}
+
+.customer-form input:focus,
+.customer-form textarea:focus,
+.product-form input:focus,
+.sales-form input:focus,
+.sales-form select:focus,
+.production-form input:focus,
+.production-form select:focus,
+.inventory-form input:focus,
+.inventory-form select:focus,
+.cost-form input:focus,
+.cost-form select:focus {
+    outline: none;
+    border-color: #ff9800;
+}
+
+/* FORM BUTTONS */
+
+.customer-form button,
+.product-form button,
+.sales-form button,
+.production-form button,
+.inventory-form button,
+.cost-form button {
+    background: #e65100;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    margin-top: 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.customer-form button:hover,
+.product-form button:hover,
+.sales-form button:hover,
+.production-form button:hover,
+.inventory-form button:hover,
+.cost-form button:hover {
+    background: #bf360c;
+}
+
+/* =====================================
+   TABLES
+===================================== */
+
+.customer-table,
+.product-table,
+.sales-table,
+.production-table,
+.inventory-table,
+.cost-table,
+.billing-table {
+    overflow-x: auto;
+}
+
+.customer-table table,
+.product-table table,
+.sales-table table,
+.production-table table,
+.inventory-table table,
+.cost-table table,
+.billing-table table,
+.main table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.customer-table th,
+.product-table th,
+.sales-table th,
+.production-table th,
+.inventory-table th,
+.cost-table th,
+.billing-table th,
+.main th {
+    background: #5d4037;
+    color: white;
+    padding: 14px;
+    text-align: left;
+}
+
+.customer-table td,
+.product-table td,
+.sales-table td,
+.production-table td,
+.inventory-table td,
+.cost-table td,
+.billing-table td,
+.main td {
+    padding: 13px;
+    border-bottom: 1px solid #eee0d5;
+}
+
+.customer-table tr:hover,
+.product-table tr:hover,
+.sales-table tr:hover,
+.production-table tr:hover,
+.inventory-table tr:hover,
+.cost-table tr:hover,
+.billing-table tr:hover {
+    background: #fff3e0;
+}
+
+/* =====================================
+   GST BILLING
+===================================== */
+
+.print-btn {
+    background: #e65100;
+    color: white;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.print-btn:hover {
+    background: #bf360c;
+}
+
+/* =====================================
+   INVOICE
+===================================== */
+
+.invoice-card {
+    background: rgba(255, 255, 255, 0.93);
+    padding: 30px;
+    margin: 25px 0;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.invoice-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.invoice-heading h2,
+.invoice-card h2 {
+    color: #e65100;
+}
+
+.invoice-title {
+    text-align: right;
+}
+
+.invoice-card hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+.invoice-card table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.invoice-card th {
+    background: #5d4037;
+    color: white;
+    padding: 12px;
+}
+
+.invoice-card td {
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+.gst-details {
+    text-align: right;
+    margin-top: 25px;
+}
+
+.invoice-footer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.invoice-card button {
+    background: #e65100;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* =====================================
+   ACTION BUTTONS
+===================================== */
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-buttons form {
+    margin: 0;
+}
+
+.edit-btn {
+    display: inline-block;
+    background: #ff9800;
+    color: white !important;
+    padding: 8px 14px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 3px;
+}
+
+.edit-btn:hover {
+    background: #e65100;
+}
+
+.delete-btn {
+    background: #e53935;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #c62828;
+}
+
+/* =====================================
+   REPORTS PAGE
+===================================== */
+
+.container .card {
+    text-align: center;
+    border-top: 4px solid #ff9800;
+}
+
+.container .card h2 {
+    color: #e65100;
+    font-size: 28px;
+}
+
+.main > .card {
+    margin-bottom: 25px;
+}
+
+.main button {
+    background: #e65100;
+    color: white;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.main button:hover {
+    background: #bf360c;
+}
+
+/* =====================================
+   RESPONSIVE DESIGN
+===================================== */
+
+@media (max-width: 1100px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 20px;
+        background-attachment: scroll;
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .invoice-heading {
+        flex-direction: column;
+    }
+
+    .invoice-title {
+        text-align: left;
+    }
+}
+
+/* =====================================
+   PRINT SETTINGS
+===================================== */
+
+@media print {
+    .sidebar,
+    .main button,
+    .invoice-card button {
+        display: none;
+    }
+
+    .main {
+        margin: 0;
+        padding: 10px;
+        background: white !important;
+    }
+
+    .invoice-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        page-break-after: always;
+    }
+}
+
+/* BIGGER TOP HEADINGS */
+.main h1 {
+    font-size: 42px !important;
+    font-weight: 800 !important;
+    color: #321609 !important;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px white;
+}
+
+.main h2 {
+    font-size: 30px !important;
+    font-weight: 750 !important;
+    color: #3e1f0d !important;
+}
+
+.main h3 {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #4e260f !important;
+}
+
+/* BIGGER DESCRIPTION LINE */
+.main p {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #321609 !important;
+    line-height: 1.6;
+}
+
+/* ACTIVE SIDEBAR PAGE */
+.sidebar a.active {
+    background: #f39c12;
+    color: #ffffff;
+    border-radius: 6px;
+}

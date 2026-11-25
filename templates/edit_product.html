@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Product | Snacks Factory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: #fff8ed;
+            color: #4e342e;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #4e342e;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 25px 15px;
+        }
+
+        .sidebar h2 {
+            color: #ffb74d;
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 23px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 14px 18px;
+            margin: 7px 0;
+            border-radius: 7px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #ff9800;
+            color: white;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 250px;
+            padding: 40px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #e65100;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #795548;
+            font-size: 15px;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: white;
+            max-width: 750px;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(78, 52, 46, 0.10);
+        }
+
+        .form-card h2 {
+            color: #5d4037;
+            margin-bottom: 8px;
+            font-size: 22px;
+        }
+
+        .form-description {
+            color: #888;
+            margin-bottom: 28px;
+            font-size: 14px;
+        }
+
+        /* Form Layout */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 9px;
+            color: #5d4037;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 15px;
+            outline: none;
+            background: #fffdf9;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #ff9800;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.12);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 22px;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .update-btn {
+            background: #e65100;
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .update-btn:hover {
+            background: #bf360c;
+        }
+
+        .cancel-btn {
+            background: #eee;
+            color: #4e342e;
+            text-decoration: none;
+            padding: 13px 25px;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .cancel-btn:hover {
+            background: #ddd;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 800px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .sidebar h2 {
+                margin-bottom: 15px;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <div class="header">
+            <h1>Edit Product</h1>
+            <p>Manage and update your snacks factory product information.</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="form-card">
+
+            <h2>Product Information</h2>
+
+            <p class="form-description">
+                Update the product details below and save your changes.
+            </p>
+
+            <form method="POST">
+
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text"
+                           name="product_name"
+                           value="{{ product.product_name }}"
+                           placeholder="Enter product name"
+                           required>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Product Price (₹)</label>
+                        <input type="number"
+                               name="price"
+                               value="{{ product.price }}"
+                               min="0.01"
+                               step="0.01"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Available Quantity</label>
+                        <input type="number"
+                               name="quantity"
+                               value="{{ product.quantity }}"
+                               min="0"
+                               required>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label>GST Rate (%)</label>
+                    <input type="number"
+                           name="gst_rate"
+                           value="{{ product.gst_rate }}"
+                           min="0"
+                           step="0.01"
+                           required>
+                </div>
+
+                <div class="button-group">
+
+                    <button type="submit" class="update-btn">
+                        Update Product
+                    </button>
+
+                    <a href="/products" class="cancel-btn">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

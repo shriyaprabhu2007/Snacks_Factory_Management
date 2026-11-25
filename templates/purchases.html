@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Purchases | Snacks Factory</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+
+        <h1>Raw Material Purchases</h1>
+        <p>Manage suppliers and raw material purchases</p>
+
+        {% if message %}
+            <div class="message-box">
+                {{ message }}
+            </div>
+        {% endif %}
+
+        <div class="card">
+
+            <h2>Add New Purchase</h2>
+
+            <form method="POST" action="/purchases">
+
+                <label>Supplier Name</label>
+                <input
+                    type="text"
+                    name="supplier_name"
+                    placeholder="Enter supplier name"
+                    required
+                >
+
+                <label>Invoice Number</label>
+                <input
+                    type="text"
+                    name="invoice_number"
+                    placeholder="Enter invoice number"
+                >
+
+                <label>Purchase Date</label>
+                <input
+                    type="date"
+                    name="purchase_date"
+                    required
+                >
+
+                <label>Raw Material</label>
+                <select name="material_id" required>
+                    <option value="">Select Raw Material</option>
+
+                    {% for material in materials %}
+                        <option value="{{ material.material_id }}">
+                            {{ material.material_name }}
+                            ({{ material.unit }})
+                        </option>
+                    {% endfor %}
+
+                </select>
+
+                <label>Quantity</label>
+                <input
+                    type="number"
+                    name="quantity"
+                    step="0.01"
+                    min="0.01"
+                    placeholder="Enter quantity"
+                    required
+                >
+
+                <label>Unit Price</label>
+                <input
+                    type="number"
+                    name="unit_price"
+                    step="0.01"
+                    min="0"
+                    placeholder="Enter unit price"
+                    required
+                >
+
+                <button type="submit">Save Purchase</button>
+
+            </form>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Purchase History</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Purchase ID</th>
+                        <th>Supplier</th>
+                        <th>Invoice Number</th>
+                        <th>Date</th>
+                        <th>Materials</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for purchase in purchases %}
+                    <tr>
+                        <td>{{ purchase.purchase_id }}</td>
+                        <td>{{ purchase.supplier_name }}</td>
+                        <td>{{ purchase.invoice_number or '-' }}</td>
+                        <td>{{ purchase.purchase_date }}</td>
+                        <td>{{ purchase.materials or '-' }}</td>
+                        <td>₹{{ purchase.total_amount }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6">No purchases available yet.</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

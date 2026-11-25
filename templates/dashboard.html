@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snacks Factory Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <h1>Factory Dashboard</h1>
+
+        <p>Welcome to Snacks Factory Management System</p>
+
+        <!-- Dashboard Cards -->
+        <div class="container">
+
+            <a href="/customers" class="card">
+                <h2>Customers</h2>
+                <p>Manage customer details</p>
+            </a>
+
+            <a href="/products" class="card">
+                <h2>Products</h2>
+                <p>Manage snack products</p>
+            </a>
+
+            <a href="/sales" class="card">
+                <h2>Sales Orders</h2>
+                <p>Manage customer orders and approval</p>
+            </a>
+
+            <a href="/billing" class="card">
+                <h2>GST Billing</h2>
+                <p>Create GST invoices</p>
+            </a>
+
+            <a href="/purchases" class="card">
+                <h2>Purchases</h2>
+                <p>Manage raw material purchases</p>
+            </a>
+
+            <a href="/production" class="card">
+                <h2>Production</h2>
+                <p>Manage snack production</p>
+            </a>
+
+            <a href="/inventory" class="card">
+                <h2>Inventory</h2>
+                <p>Manage raw materials and stock</p>
+            </a>
+
+            <a href="/cost" class="card">
+                <h2>Cost Calculation</h2>
+                <p>Calculate production expenses</p>
+            </a>
+
+            <a href="/reports" class="card">
+                <h2>Reports</h2>
+                <p>View sales and stock reports</p>
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

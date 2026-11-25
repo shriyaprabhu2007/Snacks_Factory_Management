@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Monthly Audit Reports - Snacks Factory</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+{% include 'sidebar.html' %}
+
+<div class="main">
+
+    <h1>Monthly Audit Reports</h1>
+    <p>Track and review system activities</p>
+
+    <div class="card">
+
+        <form method="GET" action="/audit-reports">
+
+            <label>Select Month:</label>
+
+            <input
+                type="month"
+                name="month"
+                value="{{ selected_month }}"
+                required
+            >
+
+            <button type="submit">View Report</button>
+
+        </form>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Audit Activity History</h2>
+
+        <table>
+
+            <tr>
+                <th>Audit ID</th>
+                <th>User ID</th>
+                <th>Action</th>
+                <th>Details</th>
+                <th>Date</th>
+            </tr>
+
+            {% for item in audit_records %}
+
+            <tr>
+                <td>{{ item.audit_id }}</td>
+                <td>{{ item.user_id or 'System' }}</td>
+                <td>{{ item.action }}</td>
+                <td>{{ item.details }}</td>
+                <td>{{ item.action_date }}</td>
+            </tr>
+
+            {% else %}
+
+            <tr>
+                <td colspan="5">No audit records found for this month.</td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

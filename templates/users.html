@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Management - Snacks Factory</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+{% include 'sidebar.html' %}
+
+<div class="main">
+
+    <h1>User Management</h1>
+    <p>Manage factory system users and permissions.</p>
+
+    {% if message %}
+        <div class="card">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <div class="card">
+
+        <h2>Add New User</h2>
+
+        <form method="POST" action="/users">
+
+            <label>Username</label>
+            <input
+                type="text"
+                name="username"
+                placeholder="Enter username"
+                required
+            >
+
+            <br><br>
+
+            <label>Password</label>
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter password (minimum 8 characters)"
+                minlength="8"
+                required
+            >
+
+            <br><br>
+
+            <label>User Role</label>
+
+            <select name="role" required>
+                <option value="">Select Role</option>
+                <option value="Admin">Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="Staff">Staff</option>
+            </select>
+
+            <br><br>
+
+            <button type="submit" name="action" value="add">
+                Add User
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Registered Users</h2>
+
+        <table>
+
+            <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for user in user_list %}
+
+            <tr>
+
+                <td>{{ user.user_id }}</td>
+
+                <td>{{ user.username }}</td>
+
+                <td>{{ user.role }}</td>
+
+                <td>
+                    {% if user.is_active %}
+                        <span style="color: green;">Active</span>
+                    {% else %}
+                        <span style="color: red;">Inactive</span>
+                    {% endif %}
+                </td>
+
+                <td>
+
+                    {% if user.user_id != session.get('user_id') %}
+
+                    <form method="POST" action="/users">
+
+                        <input
+                            type="hidden"
+                            name="user_id"
+                            value="{{ user.user_id }}"
+                        >
+
+                        <button
+                            type="submit"
+                            name="action"
+                            value="toggle"
+                        >
+                            {% if user.is_active %}
+                                Deactivate
+                            {% else %}
+                                Activate
+                            {% endif %}
+                        </button>
+
+                    </form>
+
+                    {% else %}
+
+                        Current User
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% else %}
+
+            <tr>
+                <td colspan="5">No users found.</td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
