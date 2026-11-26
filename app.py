@@ -2,6 +2,10 @@ from flask import (
     Flask, render_template, request, redirect,
     session, url_for, send_file
 )
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 from datetime import date, datetime
 from io import BytesIO
 from reportlab.pdfgen import canvas
@@ -22,14 +26,16 @@ app.secret_key = os.environ.get(
     "local-development-key-change-before-deployment"
 )
 
+
 # Database connection
 def get_db():
     return mysql.connector.connect(
-        host="localhost",
-        user="snacks_app",
-        password="YourNewPassword123!",
-        database="snacks_factory"
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
     )
+
 
 
 # Login protection
